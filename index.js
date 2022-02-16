@@ -5,11 +5,15 @@ const axios = require("axios");
 app.get('/calculate', async function (req, res) {
     const _exp = req.query.exp
     console.log(_exp);
-    if (_exp === undefined || _exp.trim() === '') {
-            return res.send({ data: 'undefined'});
+    try {
+        if (_exp === undefined || _exp.trim() === '') {
+            return res.send({data: 'undefined'});
+        }
+        const data = (await axios.get(`http://api.mathjs.org/v4/?expr=${_exp}`)).data;
+        res.send({data});
+    } catch (e) {
+        res.send({data: 'Invalid Input'});
     }
-    const data = (await axios.get(`http://api.mathjs.org/v4/?expr=${_exp}`)).data;
-    res.send({data});
 })
 
 var server = app.listen(8000, function () {
