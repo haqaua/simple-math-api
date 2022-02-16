@@ -2,9 +2,8 @@ var express = require('express');
 var app = express();
 const axios = require("axios");
 
-app.get('/calculate', async function (req, res) {
-    const _exp = req.query.exp
-    console.log(_exp);
+app.get('/', async function (req, res) {
+    const _exp = req.query.exp;
     try {
         if (_exp === undefined || _exp.trim() === '') {
             return res.send({data: 'undefined'});
